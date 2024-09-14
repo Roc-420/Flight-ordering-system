@@ -4,21 +4,22 @@ from tabulate import tabulate
 from emoji import emojize
 import random
 
+
 def main():
 
     flight_info = ["City","Flight Number","Terminal","Status","Time of departure","Time of arrival"]
-    regina = ["Regina","1265"," 01",real_time_flight_info(),"12:00 AM","2:00 PM"]
-    thunder_bay = ["Thunder Bay","1111","00",emojize(":green_circle:"),"7:00AM", "1:30PM"]
-    winnipeg= ["Winnepeg"," 9000","02",emojize(":yellow_circle:"),"5:57PM" ,"9:44PM"]
-    ottowa = ["Ottowa","1089"," 06",emojize(":red_circle:")," ----- "," -----  "]
-    yellow_knife=["Yellow Knife"," 1766","04",emojize(":yellow_circle:"),"2:24 PM", "7:44 PM"]
-    pei = ["PEI","7894", "01",emojize(":green_circle:"),"11:00PM", "3:56AM" ]
-    halifax = ["Halifax"," 4444"," 03",emojize(":green_circle:"),"4:30 PM","12:14AM"]
-    edmonton = ["Edmonton","5674"," 02",emojize(":yellow_circle:")," 4:14PM"," 7:46PM"]
-    hamilton = ["Hamilton"," 5555"," 00 ",emojize(":red_circle:") ," -----", " -----"]
-    montreal = ["Montreal","1234","04",emojize(":green_circle:"),"12:40PM"," 3:39PM"]
-    vancouver= ["Vancouver","4356","05",emojize(":green_circle:"),"5:14AM","7:34PM"]
-    calgary = ["Calgary", " 5567","00",emojize(":red_circle:")," ----",  " ----"]
+    regina = ["Regina","1265"," 01",]
+    thunder_bay = ["Thunder Bay","1111","00"]
+    winnipeg= ["Winnepeg"," 9000","02"]
+    ottowa = ["Ottowa","1089"," 06"]
+    yellow_knife=["Yellow Knife"," 1766","04"]
+    pei = ["PEI","7894", "01"]
+    halifax = ["Halifax"," 4444"," 03"]
+    edmonton = ["Edmonton","5674"," 02"]
+    hamilton = ["Hamilton"," 5555"," 00 "]
+    montreal = ["Montreal","1234","04"]
+    vancouver= ["Vancouver","4356","05"]
+    calgary = ["Calgary", " 5567","00"]
 
     
 #merging all the lists into an array 
