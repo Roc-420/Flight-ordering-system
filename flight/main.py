@@ -137,9 +137,7 @@ def main():
     saved = loyalty()
     bag_price = bag_check()
     adjusted_price = adjusted_price - saved + bag_price
-    adjusted_price = adjusted_price * 1.13 # hst
-    adjusted_price = round(adjusted_price,2) # rounds it to two decimal places
-    
+    adjusted_price = adjusted_price * 1.13
 
     print(f"Your flight to {destination} has been placed.\n Your seat is {seat_position} \n The price of your flight is ${adjusted_price} \n Thank you for ordering with us!")
 if __name__ == "__main__":
