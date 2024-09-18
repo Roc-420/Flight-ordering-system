@@ -2,18 +2,28 @@ import random
 from emoji import emojize
 from tabulate import tabulate
 from colorama import Fore, Back, Style
+import csv
 
-#due to the scale of this project, features will be made into function, getting inputs from a user will be given in the function parameters to make unit tests for it
-#additionally the list of users and password will be taken as a paramter as well so it can be modified outside 
-def user_attentification(user,password,list_of_users):
+#due to the scale of this project, features will be made into function
+def user_login(list_of_users,account):
 
-    if [user,password] in list_of_users:
-        return True
+    while True:
+        user = input(f"Enter a userfor {account}:  ").lower().strip()
+        password = input("Enter a password:  ").lower().strip()
+        if match({"user":user,"password":password},list_of_users):
+            print("correct login !")
+            return {"user":user,"password":password}
     
-    else:
-        return False
-    
+        else:
+            print("incorrent login !")
 
+def match(dict,list): # checks to see if dict is in a list
+    for dictionary in list:
+        if dict == dictionary:
+            return True
+        else:
+            pass
+    return False # it will reach this if the return true statement does not occur
 #since air ontario isnt a current company, flight,info will be randomly generated and flight times
 
 def real_time_flight_info():
@@ -60,7 +70,7 @@ def real_time_flight_info():
         status_time.append(f"{departure_time}:{minutes_1}")
         status_time.append(f"{arrival_time}:{minutes_2}")
 
-    return status_time[0],status_time[1],status_time[2]
+    return  status_time
 
 
 def class_selection():
@@ -141,7 +151,7 @@ def length_check(info,minimum,maximum):
         print(f"{info} is valid.")
         return True
 
-def user_create(user_list,account_name):# will be used for creating a new user
+def user_create(user_dict,account_name):# will be used for creating a new user
     #allows user to opt out of creating an account if they would not like to 
     while True:
         desire = input(f"Would you like to create a user for {account_name}:  ").strip().lower()
@@ -157,8 +167,10 @@ def user_create(user_list,account_name):# will be used for creating a new user
     while True:
         while True:
             username = input("Enter your new user name:   ").strip().lower()                  
-            validity = length_check(username,7,30)
+            validity = length_check(username,4,30)
+
             if validity == True:
+
                 break
             else:
                 pass
@@ -171,11 +183,41 @@ def user_create(user_list,account_name):# will be used for creating a new user
                 pass
 
 
-        if [username,password] in user_list:
+        if {"user":username,"password":password} in user_dict:
             print("username and password already exist!")
 
 
         else:
-            print(f" An {account_name} account has been created with the username {username} ")
-            user_list.append([username,password])
+            print(f"An {account_name} account has been created with the username {username} ")
+            user_dict.append({"user":username,"password":password})
             break
+  
+
+def data_storage(data_var,data_file): # will be used for merging a variable and a csv file together(only the unique terms) and writing it to the file
+    data_dict = []
+    field_names = ["user","password"]
+    with open(data_file,'r') as file: # wdatill be acessing the dictionary here
+        reader = csv.reader(file,delimiter=',')
+        for row in reader:
+            if row == []: # preventing error from occuring with blank line
+                break
+            else:
+                new_item = {"user":row[0],"password":row[1]}
+                data_dict.append(new_item)
+        
+
+
+    new_info = data_var # duplicated should be handled by the user create function
+
+    with open(data_file,'a') as file:
+        writer = csv.DictWriter(file,fieldnames = field_names)
+        for row in new_info:
+            writer.writerow(row)
+# returns the complete list of data
+    complete_data = data_dict + new_info
+    return complete_data
+
+
+
+    # for the loyalty program, everytime a purchase is made by a user, the amount of purchased made will be saved to a csv file, than a multiplier will be added to determine the number of flight
+    # poiints which will then be used to determine the amount of saving a user infers

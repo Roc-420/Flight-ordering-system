@@ -3,23 +3,37 @@
 from tabulate import tabulate
 from emoji import emojize
 import random
+from colorama import Fore, Back, Style
+from function import real_time_flight_info,seat_selection,class_selection,user_attentification,user_create
+class users:    
+    air_ontario = []
+    paypal = []
+    google_pay = []
+    apple_pay = []
+class current_users:
+    air_ontario = []
+    paypal = []
+    google_pay = []
+    apple_pay = [] 
+
+import pickle
 
 
 def main():
 
-    flight_info = ["City","Flight Number","Terminal","Status","Time of departure","Time of arrival"]
-    regina = ["Regina","1265"," 01",]
-    thunder_bay = ["Thunder Bay","1111","00"]
-    winnipeg= ["Winnepeg"," 9000","02"]
-    ottowa = ["Ottowa","1089"," 06"]
-    yellow_knife=["Yellow Knife"," 1766","04"]
-    pei = ["PEI","7894", "01"]
-    halifax = ["Halifax"," 4444"," 03"]
-    edmonton = ["Edmonton","5674"," 02"]
-    hamilton = ["Hamilton"," 5555"," 00 "]
-    montreal = ["Montreal","1234","04"]
-    vancouver= ["Vancouver","4356","05"]
-    calgary = ["Calgary", " 5567","00"]
+    flight_info = [f"{Style.BRIGHT}City","Flight Number","Terminal","Status","Time of departure","Time of arrival","Carousel Number","Desination Code"]
+    regina =  [f"{Fore.BLUE}Regina",f"{Style.DIM}{Fore.WHITE}1265"," 01"] + real_time_flight_info() + ["01","543"]
+    thunder_bay = [f"{Fore.CYAN}Thunder Bay",f"{Style.DIM}{Fore.WHITE}1111","00"] + real_time_flight_info() + ["02","534"]
+    winnipeg= [f"{Fore.GREEN}Winnepeg",f"{Style.DIM}{Fore.WHITE}9000","02"] + real_time_flight_info() + ["17","253"]
+    ottowa = [f"{Fore.LIGHTMAGENTA_EX}Ottowa",f"{Style.DIM}{Fore.WHITE}1089"," 06"] + real_time_flight_info() + ["10","686"]
+    yellow_knife=[f"{Fore.WHITE}Yellow Knife",f"{Style.DIM}{Fore.WHITE}1766","04"] + real_time_flight_info() + ["03","575"]
+    pei = [f"{Fore.RED}PEI",f"{Style.DIM}{Fore.WHITE}7894", "01",] + real_time_flight_info() + ["09","776"]
+    halifax = [f"{Fore.LIGHTYELLOW_EX}Halifax", f"{Style.DIM}{Fore.WHITE}4444"," 03"] + real_time_flight_info() + ["07","521"]
+    edmonton = [f"{Fore.LIGHTBLUE_EX}Edmonton",f"{Style.DIM}{Fore.WHITE}5674"," 02"] + real_time_flight_info() + ["10","474"]
+    hamilton = [f"{Fore.LIGHTRED_EX}Hamilton",f"{Style.DIM}{Fore.WHITE}5555"," 00 "] + real_time_flight_info() + ["16","502"]
+    montreal = [f"{Fore.BLACK}Montreal",f"{Style.DIM}{Fore.WHITE}1234","04"] + real_time_flight_info() + ["10","926"]
+    vancouver= [f"{Fore.LIGHTGREEN_EX}Vancouver",f"{Style.DIM}{Fore.WHITE}4356","05"] + real_time_flight_info() + ["17","129"]
+    calgary = [f"{Fore.YELLOW}Calgary", f"{Style.DIM}{Fore.WHITE}5567","00"] + real_time_flight_info() + ["19","425"]
 
     
 #merging all the lists into an array 
@@ -27,55 +41,41 @@ def main():
     print(tabulate(complete_list, tablefmt="modern"))
 
 
-#due to the scale of this project, features will be made into function, getting inputs from a user will be given in the function parameters to make unit tests for it
-def user_attentification(user,password):
-    list_of_users= [["user1","1234"],["user2","4321"],["user3","0000"]]     #list of users user can log in as 
+# thank you message and meaning of status symbols
 
-    if [user,password] in list_of_users:
-        return True
+    print("Thank you for choosing Air Ontario")
+    print(emojize(" -:red_circle: means the flight is cancelled"))
+    print(emojize(" -:green_circle: means the flight is on time"))    
+    print(emojize(" -:yellow_circle: means the flight is delayed"))
+    print(emojize(" -:blue_circle: means the flight has arrived"))
+
+    # here it will let users check the additional info of a flight
+
+
+
+    #here we will start letting the user do flight orders
+
+    while True:
+        _ = input("Would you like to purchase a flight?   ").strip().lower()
+
+        if _  == "yes":
+            break
     
-    else:
-        return False
+        elif _ == "no":
+            return None
     
+        else:
+            pass
 
-#since air ontario isnt a current company, flight,info will be randomly generated and flight times
+# creates a new account if the user wants it 
+    user_create(users.paypal,"Paypal")
+    user_create(users.apple_pay,"Apple Pay")
+    user_create(users.google_pay,"Google Pay")
+    user_create(users.air_ontario, "Air Ontario")
 
-def real_time_flight_info():
-    status = random.randrange(0,5) # each number represents a status delayed,etc 
-    status_time= [] # will contain 
+# we create 
 
-    """
-    0 == cancelled
-    1 == ontime
-    2== arrived
-    3: == delayed 
-    """
-
-    # creating status
-    if status == 0:
-        status_time.append (emojize(":red_circle:"))
     
-    elif status == 1:
-        status_time.append  (emojize(":green_circle:"))
-    
-    elif status == 2:
-        status_time.append (emojize(":blue_circle:"))
-    
-    elif status == 3:
-        status_time.append (emojize(":yellow_circle:"))
-
-    if status == 0 or status == 2: # a delayed or cancelled flight doe not have a flight time
-        status_time.append ("----")
-
-    else: # generating flight time for ontime or delayed flights
-        time = random.randrange(0,5)# fligt time is between 0 to 4 hours
-        
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
