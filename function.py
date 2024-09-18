@@ -3,12 +3,14 @@ from emoji import emojize
 from tabulate import tabulate
 from colorama import Fore, Back, Style
 import csv
+from PIL import Image
+
 
 #due to the scale of this project, features will be made into function
 def user_login(list_of_users,account):
 
     while True:
-        user = input(f"Enter a userfor {account}:  ").lower().strip()
+        user = input(f"Enter a user for {account}:  ").lower().strip()
         password = input("Enter a password:  ").lower().strip()
         if match({"user":user,"password":password},list_of_users):
             print("correct login !")
@@ -25,6 +27,7 @@ def match(dict,list): # checks to see if dict is in a list
             pass
     return False # it will reach this if the return true statement does not occur
 #since air ontario isnt a current company, flight,info will be randomly generated and flight times
+
 
 def real_time_flight_info():
     status = random.randrange(0,4) # each number represents a status delayed,etc 
@@ -151,7 +154,7 @@ def length_check(info,minimum,maximum):
         print(f"{info} is valid.")
         return True
 
-def user_create(user_dict,account_name):# will be used for creating a new user
+def user_create(user_dict,account_name,user_stored):# will be used for creating a new user
     #allows user to opt out of creating an account if they would not like to 
     while True:
         desire = input(f"Would you like to create a user for {account_name}:  ").strip().lower()
@@ -183,7 +186,7 @@ def user_create(user_dict,account_name):# will be used for creating a new user
                 pass
 
 
-        if {"user":username,"password":password} in user_dict:
+        if {"user":username,"password":password} in user_stored:
             print("username and password already exist!")
 
 
@@ -191,9 +194,9 @@ def user_create(user_dict,account_name):# will be used for creating a new user
             print(f"An {account_name} account has been created with the username {username} ")
             user_dict.append({"user":username,"password":password})
             break
-  
+    
 
-def data_storage(data_var,data_file): # will be used for merging a variable and a csv file together(only the unique terms) and writing it to the file
+def data_storage(data_var,data_file): # will be used for merging a variable and a csv file together(only the unique terms) and appending the variable file to
     data_dict = []
     field_names = ["user","password"]
     with open(data_file,'r') as file: # wdatill be acessing the dictionary here
@@ -221,3 +224,70 @@ def data_storage(data_var,data_file): # will be used for merging a variable and 
 
     # for the loyalty program, everytime a purchase is made by a user, the amount of purchased made will be saved to a csv file, than a multiplier will be added to determine the number of flight
     # poiints which will then be used to determine the amount of saving a user infers
+
+
+def item_check(item,list):
+    for dict in list:
+        if item in dict['user']:
+            return True
+        else:
+            pass
+
+    return False # if the item is not found it will proceed to this  
+
+
+def loyalty(): #  little time
+    while True:
+        try:
+            purchases = int(input("How many purchases are on your account:   "))
+            if purchases < 0:
+                pass
+            else:
+                break
+        except:
+            print("error, invalid input")
+
+    point = purchases * 100
+    saved_money = purchases * 12
+
+    print(f"Congragulations, you have {point} points. You will save ${saved_money}")
+
+    return saved_money
+
+def price(seat): # adjusting price depending on the class
+    if seat == "economy":
+        return 220
+    elif seat == "business":
+        return 260
+    elif seat  == "first class":
+        return 550
+    else:
+        print("error")
+
+def bag_check():
+    while True:
+        try:
+            weight = int(input("How much weight is your luggage/bags in total?(kg):   "))
+            if weight < 0:
+                pass
+            else:
+                break
+        except:
+            print("error, invalid input")
+
+    cost = weight * 1.2
+    return cost
+
+def image_view(list):
+    while True:
+        while True:
+            name_list = input("What city map would you like to look at?: ").strip().lower()
+            if name_list in list:
+                break
+            elif name_list == "none":
+                return None
+            else:
+                print("invalid option")
+        file_location = name_list + ".png"
+        img = Image.open(file_location)
+        img.show()
